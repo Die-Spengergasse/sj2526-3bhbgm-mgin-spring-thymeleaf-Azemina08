@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Haustier hinzufuegen</title>
+</head>
+
+<body>
+
+<h1>Haustier hinzufuegen</h1>
+
+<form th:action="@{/pets/add}" th:object="${pet}" method="post">
+    <input type="hidden" th:field="*{id}" />
+    <input type="text" th:field="*{name}" placeholder="Name"/>
+    <input type="text" th:field="*{rasse}" placeholder="Rasse"/>
+    <input type="date" th:field="*{birth}" />
+
+    <button type="submit">Speichern</button>
+
+</form>
+
+</body>
+</html>
