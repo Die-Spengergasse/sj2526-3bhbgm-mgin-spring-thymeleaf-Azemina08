@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.format.DateTimeFormatter;
-
+// aenderung
 @Controller
 @RequestMapping("/patient")
 public class PatientController {
