@@ -16,39 +16,45 @@ public class PetsController {
         this.petRepository = petRepository;
     }
 
-    // Alle Pets anzeigen
     @GetMapping("/petlist")
     public String pets(Model model) {
         model.addAttribute("pets", petRepository.findAll());
         return "petlist";
     }
 
-    // Formular für neues Pet
     @GetMapping("/add")
     public String addPets(Model model) {
         model.addAttribute("pet", new Pets());
         return "add_pets";
     }
 
-    // Neues Pet speichern
     @PostMapping("/add")
     public String addPets(@ModelAttribute("pet") Pets pet) {
-        petRepository.save(pet);  // ← hier wird das objekt in der Datenbank gespeichert
+        petRepository.save(pet);
         return "redirect:/pets/petlist";
     }
 
-    // pet löschen
     @GetMapping("/delete/{id}")
     public String deletePet(@PathVariable("id") Long id) {
         petRepository.deleteById(id);
         return "redirect:/pets/petlist";
     }
 
-    // pet bearbeiten
+    // ✅ FIX: orElse(null) statt orElseThrow()
     @GetMapping("/edit/{id}")
     public String editPet(@PathVariable("id") Long id, Model model) {
-        Pets pet = petRepository.findById(id).orElseThrow();
+        Pets pet = petRepository.findById(id).orElse(null);
+        if (pet == null) {
+            return "redirect:/pets/petlist";  // ID nicht gefunden → zurück zur Liste
+        }
         model.addAttribute("pet", pet);
         return "edit_pets";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String updatePet(@PathVariable("id") Long id, @ModelAttribute("pet") Pets pet) {
+        pet.setId(id);
+        petRepository.save(pet);
+        return "redirect:/pets/petlist";
     }
 }
