@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Haustier bearbeiten</title>
+</head>
+<body>
+<h1>Haustier bearbeiten</h1>
+
+<form th:action="@{/pets/edit/{id}(id=${pet.id})}" th:object="${pet}" method="post">
+    <input type="hidden" th:field="*{id}" />
+
+    <label>Name:</label>
+    <input type="text" th:field="*{name}" />
+    <br><br>
+
+    <label>Rasse:</label>
+    <input type="text" th:field="*{rasse}" />
+    <br><br>
+
+    <label>Geburtsdatum:</label>
+    <input type="date" th:field="*{birth}" />
+    <br><br>
+
+    <button type="submit">Speichern</button>
+</form>
+
+<p><a th:href="@{/pets/petlist}">Zurück zur Liste</a></p>
+</body>
+</html>
